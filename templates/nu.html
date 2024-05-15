@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/nu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/nu.js">
+    <title>Detection of Data Phishing using Machine Learning</title>
+    <script>
+        const form = document.getElementById('prediction-form');
+        const urlInput = document.getElementById('query');
+        const resultDisplay = document.createElement('div'); // Create an element for displaying results
+        resultDisplay.id = 'prediction-result';
+      
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault(); // Prevent default form submission behavior
+      
+          const url = urlInput.value;
+          if (!url) {
+            alert('Please enter a URL.');
+            return; // Prevent further processing if URL is empty
+          }
+      
+          try {
+            const response = await fetch('/predict', {
+              method: 'POST',
+              body: JSON.stringify({ url: url }), // Send URL as JSON data
+              headers: { 'Content-Type': 'application/json' }
+            });
+      
+            if (!response.ok) {
+              throw new Error(`Error fetching prediction: ${response.status}`);
+            }
+      
+            const data = await response.json();
+            resultDisplay.textContent = data.result;
+            form.appendChild(resultDisplay); // Append result to the form
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Prediction failed. Please try again later.');
+          }
+        });
+      </script>
+      
+</head>
+<body>
+    <section class="showcase">
+        <header>
+            <h2 class="logo">URLGuardianPRO</h2>
+            <div class="toggle"></div>
+        </header>
+
+
+        <div class="overlay"></div>
+
+        <div class="text">
+
+            <h1>Data Phishing</h1>
+            <h3>Detection of Data Phishing using Machine Learning</h3>
+            <p>Data phishing is a form of cyber attack where cybercriminals attempt to trick individuals into revealing sensitive information such as passwords, credit card numbers, or personal identification details. This is typically done through deceptive emails, messages, or websites that appear legitimate but are actually controlled by the attackers.</p>&nbsp;
+            <p>Detecting phishing websites using machine learning involves teaching computers to recognize the difference between legitimate and fake website addresses (URLs). Imagine you're trying to spot a fake website pretending to be your bank. Machine learning algorithms, like Random Forest and Support Vector Machine, learn from examples of real and fake URLs.</p>&nbsp;
+            
+            
+            <form id="prediction-form" action="/predict" method="post">
+                <input type="search" id="query" name="features" placeholder="Enter URL to check">
+                <button type="submit">Predict</button>
+            </form>
+        </div>
+
+        <video id="vid" src="/static/video.mp4" muted loop autoplay></video>
+
+    
+    </section>
+
+</body>
+</html>
