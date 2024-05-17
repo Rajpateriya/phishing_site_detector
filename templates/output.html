@@ -1,13 +1,50 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <title>URLGuardianPRO</title>
-</head>
-<body>
-    <h1>Phishing Website Checker</h1>
-    <p>Data: {{ data }}</p>
-    <p>Result: {{ result }}</p>
-</body>
+  </head>
+  <body>
+    <!--
+// v0 by Vercel.
+// https://v0.dev/t/lOQafJfQFQY
+-->
+
+    <main
+      class="flex flex-col items-center justify-center h-screen w-full bg-gradient-to-br from-teal-500 to-teal-700 dark:from-gray-900 dark:to-gray-800 px-4 md:px-6"
+    >
+      <a href="/" className="flex justify-center items-center gap-2">
+        <button
+          class="h-12 absolute m-4 top-0 left-0 w-32 bg-gradient-to-br to-gray-400 flex justify-center items-center flex-row-reverse cursor-pointer font-mono border border-white text-gray-400 transition duration-500 rounded-md shadow-md hover:shadow-xl hover:text-gray-200 active:shadow-inner active:shadow-2xl"
+        >
+          <IoMdArrowRoundBack />
+          Back
+        </button>
+      </a>
+      <div class="max-w-md w-full space-y-6">
+        <div
+          class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-4"
+        >
+          <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-black-600 dark:text-teal-400">
+              URLGuardianPRO
+            </h2>
+          </div>
+          <p class="text-lg text-gray-600 dark:text-gray-400">
+            URL : {{ data }}
+          </p>
+          <div class="bg-gray-300 dark:bg-gray-700 rounded-md p-4">
+            <p class="font-bold text-gray-900 dark:text-gray-100">{{result}}</p>
+            <p class="text-gray-600 dark:text-gray-400 break-all"></p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>

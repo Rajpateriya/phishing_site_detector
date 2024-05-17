@@ -1,77 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/nu.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/nu.js">
-    <title>Detection of Data Phishing using Machine Learning</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="/static/nu.css"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/static/nu.js" />
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>URLGuardianPRO</title>
     <script>
-        const form = document.getElementById('prediction-form');
-        const urlInput = document.getElementById('query');
-        const resultDisplay = document.createElement('div'); // Create an element for displaying results
-        resultDisplay.id = 'prediction-result';
-      
-        form.addEventListener('submit', async (event) => {
-          event.preventDefault(); // Prevent default form submission behavior
-      
-          const url = urlInput.value;
-          if (!url) {
-            alert('Please enter a URL.');
-            return; // Prevent further processing if URL is empty
+      const form = document.getElementById("prediction-form");
+      const urlInput = document.getElementById("query");
+      const resultDisplay = document.createElement("div"); // Create an element for displaying results
+      resultDisplay.id = "prediction-result";
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        const url = urlInput.value;
+        if (!url) {
+          alert("Please enter a URL.");
+          return; // Prevent further processing if URL is empty
+        }
+
+        try {
+          const response = await fetch("/predict", {
+            method: "POST",
+            body: JSON.stringify({ url: url }), // Send URL as JSON data
+            headers: { "Content-Type": "application/json" },
+          });
+
+          if (!response.ok) {
+            throw new Error(`Error fetching prediction: ${response.status}`);
           }
-      
-          try {
-            const response = await fetch('/predict', {
-              method: 'POST',
-              body: JSON.stringify({ url: url }), // Send URL as JSON data
-              headers: { 'Content-Type': 'application/json' }
-            });
-      
-            if (!response.ok) {
-              throw new Error(`Error fetching prediction: ${response.status}`);
-            }
-      
-            const data = await response.json();
-            resultDisplay.textContent = data.result;
-            form.appendChild(resultDisplay); // Append result to the form
-          } catch (error) {
-            console.error('Error:', error);
-            alert('Prediction failed. Please try again later.');
-          }
-        });
-      </script>
-      
-</head>
-<body>
-    <section class="showcase">
-        <header>
-            <h2 class="logo">URLGuardianPRO</h2>
-            <div class="toggle"></div>
-        </header>
 
+          const data = await response.json();
+          resultDisplay.textContent = data.result;
+          form.appendChild(resultDisplay); // Append result to the form
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Prediction failed. Please try again later.");
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <style>
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
 
-        <div class="overlay"></div>
-
-        <div class="text">
-
-            <h1>Data Phishing</h1>
-            <h3>Detection of Data Phishing using Machine Learning</h3>
-            <p>Data phishing is a form of cyber attack where cybercriminals attempt to trick individuals into revealing sensitive information such as passwords, credit card numbers, or personal identification details. This is typically done through deceptive emails, messages, or websites that appear legitimate but are actually controlled by the attackers.</p>&nbsp;
-            <p>Detecting phishing websites using machine learning involves teaching computers to recognize the difference between legitimate and fake website addresses (URLs). Imagine you're trying to spot a fake website pretending to be your bank. Machine learning algorithms, like Random Forest and Support Vector Machine, learn from examples of real and fake URLs.</p>&nbsp;
-            
-            
-            <form id="prediction-form" action="/predict" method="post">
-                <input type="search" id="query" name="features" placeholder="Enter URL to check">
-                <button type="submit">Predict</button>
-            </form>
+    <section
+      class="w-full h-auto flex items-center justify-center py-32 md:py-24 lg:py-32 bg-teal-500 dark:bg-gray-800"
+    >
+      <div
+        class="container grid items-center gap-4 px-4 md:px-6 lg:grid-cols-2 lg:gap-12"
+      >
+        <div class="space-y-4">
+          <div
+            class="inline-block rounded-lg font-bold bg-gray-200 px-3 py-1 text-xl dark:bg-gray-700"
+          >
+            URLGuardian<span class="text-gray-700">PRO</span>
+          </div>
+          <h2
+            class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+          >
+            Protect Your Business from Phishing Attacks
+          </h2>
+          <p
+            class="max-w-[600px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-300"
+          >
+            Phishing attacks can be devastating to your business. Our advanced
+            machine learning model can detect and prevent phishing attempts
+            before they cause any harm.
+          </p>
+          <p
+            class="max-w-[600px] text-black md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-300"
+          >
+            Simply enter a URL and our model will do the rest.
+          </p>
         </div>
-
-        <video id="vid" src="/static/video.mp4" muted loop autoplay></video>
-
-    
+        <div class="flex flex-col items-start space-y-4">
+          <form
+            class="w-full max-w-md space-y-2"
+            id="prediction-form"
+            action="/predict"
+            method="post"
+          >
+            <label
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-black dark:text-gray-300"
+              for="url"
+            >
+              Enter a URL to check for phishing
+            </label>
+            <div class="flex space-x-2">
+              <input
+                class="flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 bg-white dark:bg-gray-900 dark:text-gray-300"
+                placeholder="https://example.com"
+                type="search"
+                id="query"
+                name="features"
+              />
+              <button
+                class="inline-flex items-center justify-center text-white whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-gray-900 text-gray-50 hover:bg-gray-900/90 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90"
+                type="submit"
+              >
+                Check URL
+              </button>
+            </div>
+          </form>
+          <p class="text-sm text-black dark:text-gray-400">
+            Our machine learning model is constantly updated to detect the
+            latest phishing techniques.
+          </p>
+        </div>
+      </div>
     </section>
-
-</body>
+    <section class="h-32 bg-teal-500"></section>
+  </body>
 </html>
