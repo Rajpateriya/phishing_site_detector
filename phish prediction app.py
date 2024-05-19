@@ -19,6 +19,7 @@ HARDCODED_URLS = {
     "https://www.uitrgpv.ac.in/index.aspx": "This URL is SAFE TO USE!",
     "https://www.uitrgpv.ac.in/":"This URL is SAFE TO USE!",
     "https://www.rgpv.ac.in/": "This URL is SAFE TO USE!"
+    
 
 }
 
